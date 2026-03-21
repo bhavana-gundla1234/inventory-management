@@ -67,12 +67,17 @@ exports.login = async (req, res) => {
 
     console.log("email , password", email, password);
 
+
+    console.log("about to find user ");
+
     const user = await User.findOne({ email });
+
+    console.log("user is ", user);
 
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "Invalid email or password"
+        message: "User not found"
       });
     }
 
