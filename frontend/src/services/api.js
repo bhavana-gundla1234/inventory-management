@@ -1,5 +1,5 @@
 // const BASE_URL = "http://localhost:5000/api";
- const BASE_URL ="https://inventory-management-backend-5rz0.onrender.com/"
+ const BASE_URL ="https://inventory-management-backend-5rz0.onrender.com/api"
 
 export const apiRequest = async (url, method = "GET", body = null) => {
 
