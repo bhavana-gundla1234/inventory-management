@@ -1,0 +1,60 @@
+.statisticsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "cards cards cards"
+    "graph graph products";
+  gap: 24px;
+  padding: 20px;
+}
+
+.topCards {
+  grid-area: cards;
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.graphSection {
+  grid-area: graph;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.topProductsSection {
+  grid-area: products;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1024px) {
+  .statisticsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background-color: #3f4254;
+    /* Dark theme matching Image */
+    gap: 16px;
+  }
+
+  .graphSection {
+    order: 1;
+  }
+
+  .topCards {
+    order: 2;
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    gap: 12px;
+  }
+
+  .topProductsSection {
+    order: 3;
+    margin-top: 8px;
+  }
+}

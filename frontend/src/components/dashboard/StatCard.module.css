@@ -1,0 +1,56 @@
+.statCard {
+    flex: 1;
+    padding: 24px;
+    border-radius: 12px;
+    color: #111827;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(17, 24, 39, 0.8);
+}
+
+.icon {
+    opacity: 0.6;
+}
+
+.value {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 12px 0;
+    letter-spacing: -0.02em;
+}
+
+.percent {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(17, 24, 39, 0.7);
+}
+
+/* Color Themes */
+.yellow {
+    background-color: #ffd66b;
+    /* Exact yellow from image */
+}
+
+.green {
+    background-color: #2deebd;
+    /* Exact cyan/green from image */
+}
+
+.pink {
+    background-color: #f8a1f1;
+    /* Exact pink from image */
+}

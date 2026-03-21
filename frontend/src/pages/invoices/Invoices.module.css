@@ -1,0 +1,539 @@
+/* Row-Level Delete Confirmation Popup */
+.rowDeletePopup {
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  /* Positioned to the left of the three-dots */
+  transform: translateY(-50%);
+  background-color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 260px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+.deletePopupText {
+  font-size: 13px;
+  color: #111827;
+  text-align: left;
+}
+
+.deletePopupActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
+
+.cancelBtn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.confirmBtn {
+  background-color: #1f2937;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.confirmBtn:hover {
+  background-color: #111827;
+}
+
+.invoicePage {
+  padding: 16px;
+  background-color: #f9fafb;
+  min-height: 100%;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summaryContainer {
+  margin-bottom: 24px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.summaryTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #3f4254;
+  margin-bottom: 24px;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+/* External dividers between blocks on desktop */
+.summary>.card:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 0;
+  width: 1px;
+  background-color: #e5e7eb;
+}
+
+.card {
+  padding: 0 24px;
+  position: relative;
+}
+
+.card:first-child {
+  padding-left: 0;
+}
+
+.cardContent {
+  width: 100%;
+}
+
+.statGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.statMainLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.statValuesRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statItem:last-child:not(:only-child) {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.statValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.statSubLabel {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.tableContainer {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tableHeader h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.invoiceTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoiceTable th {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+}
+
+.invoiceTable td {
+  padding: 16px;
+  font-size: 14px;
+  color: #111827;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.invoiceId {
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.statusPill {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.statusPaid {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.statusUnpaid {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.actionCell {
+  position: relative;
+  text-align: right;
+}
+
+.threeDots {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 4px;
+  width: 32px;
+  margin-left: auto;
+  position: relative;
+  z-index: 1000;
+}
+
+.menu {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  min-width: 135px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.menuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #4b5563;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.menuItem:hover {
+  background-color: #f3f4f6;
+}
+
+.paidAction {
+  background-color: #059669 !important;
+  color: white !important;
+  border-radius: 4px;
+  justify-content: center;
+}
+
+.unpaidAction {
+  background-color: #dc2626 !important;
+  color: white !important;
+  border-radius: 4px;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.pageInfo {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.pageBtn {
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.pageBtn:hover {
+  background-color: #f9fafb;
+}
+
+.pageBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .invoicePage {
+    padding: 12px;
+    background-color: #3f4254;
+  }
+
+  .summaryContainer {
+    padding: 16px;
+    background-color: white;
+    margin-bottom: 16px;
+  }
+
+  .summaryTitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 12px;
+  }
+
+  .summary>.card:not(:last-child)::after {
+    display: none;
+  }
+
+  .card {
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    background: none;
+  }
+
+  .statGroup {
+    gap: 8px;
+  }
+
+  .statMainLabel {
+    font-size: 13px;
+  }
+
+  .statValuesRow {
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .statValue {
+    font-size: 14px;
+  }
+
+  .statSubLabel {
+    font-size: 11px;
+  }
+
+  .tableContainer {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .tableHeader {
+    padding: 16px;
+    margin-bottom: 0;
+  }
+
+  .tableHeader h3 {
+    font-size: 16px;
+  }
+
+  .invoiceTable th {
+    background-color: #c7d2fe;
+    color: #1e1e2e;
+    padding: 12px;
+  }
+
+  .idCol {
+    padding-left: 20px !important;
+  }
+
+  .actionCol {
+    text-align: center !important;
+  }
+
+  .hideOnMobile {
+    display: none;
+  }
+
+  .actionCell {
+    padding: 12px !important;
+  }
+
+  .threeDots {
+    display: none;
+  }
+
+  .directActions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .viewIconBtn,
+  .deleteIconBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .viewIconBtn {
+    background-color: #0ea5e9;
+    color: white;
+  }
+
+  .deleteIconBtn {
+    background-color: #f97316;
+    color: white;
+  }
+
+  .payBtn {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 80px;
+  }
+
+  /* Centered Delete Modal (Image 3) */
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+  }
+
+  .deleteModal {
+    background-color: white;
+    padding: 32px;
+    border-radius: 20px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .deleteModalText {
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+  }
+
+  .deleteModalActions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .modalCancelBtn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    color: #9ca3af;
+    cursor: pointer;
+  }
+
+  .modalConfirmBtn {
+    flex: 1.5;
+    background-color: #1e1e2e;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 769px) {
+  .directActions {
+    display: none;
+  }
+
+  .modalOverlay {
+    display: none;
+  }
+}

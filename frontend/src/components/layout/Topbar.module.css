@@ -1,0 +1,45 @@
+.topbar {
+    height: 70px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    border-bottom: 2px solid white;
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        display: none;
+    }
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 8px 16px;
+    width: 300px;
+}
+
+.searchIcon {
+    color: #9ca3af;
+    margin-right: 12px;
+}
+
+.searchInput {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    color: #1f2937;
+    /* Dark text for visibility */
+}

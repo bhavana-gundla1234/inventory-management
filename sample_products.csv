@@ -1,0 +1,2 @@
+name,productId,category,price,quantity,unit,expiryDate,threshold
+Product G,G606,Grocery,50,200,kg,2024-01-20,30

@@ -1,0 +1,42 @@
+.topProductsCard {
+    background-color: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.topProductsCard h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e1e2e;
+    margin-bottom: 24px;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.productItem {
+    padding: 8px 0;
+}
+
+.productInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.productName {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e1e2e;
+}
+
+.emptyMsg {
+    color: #9ca3af;
+    font-size: 14px;
+    text-align: center;
+}

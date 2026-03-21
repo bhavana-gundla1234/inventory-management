@@ -1,0 +1,102 @@
+.settingsContainer {
+    padding: 0;
+    background-color: #ffffff;
+    min-height: calc(80vh - 80px);
+}
+
+.settingsCard {
+    background: transparent;
+    padding: 24px;
+    margin: 0;
+}
+
+.header {
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 40px;
+    display: flex;
+}
+
+.tab {
+    padding: 10px 0;
+    font-weight: 600;
+    font-size: 16px;
+    color: #111827;
+    border-bottom: 3px solid #1f2937;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 450px;
+}
+
+.formGroup label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #374151;
+}
+
+.formGroup input {
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #111827;
+    transition: border-color 0.2s;
+}
+
+.formGroup input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.formGroup input:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+    color: #6b7280;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    max-width: 450px;
+}
+
+.saveBtn {
+    background-color: #1f2937;
+    color: white;
+    padding: 12px 40px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.saveBtn:hover {
+    background-color: #374151;
+}
+
+.saveBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .settingsCard {
+        padding: 20px;
+    }
+}

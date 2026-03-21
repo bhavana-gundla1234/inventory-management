@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.header h2 {
+  color: white;
+}
+
+.search {
+  width: 260px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
