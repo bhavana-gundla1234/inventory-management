@@ -72,9 +72,15 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ email });
 
+
+    console.log("debug 1");
+
     console.log("user is ", user);
 
+    console.log("debug 2");
+
     if (!user) {
+       console.log("debug 3");
       console.log("user not found returning now")
       return res.status(400).json({
         success: false,
@@ -82,10 +88,15 @@ exports.login = async (req, res) => {
       });
     }
 
+      console.log("debug 4");
+
     const isMatch = await bcrypt.compare(password, user.password);
+
+      console.log("debug 5 ");
 
     if (!isMatch) {
 
+        console.log("debug 6");
       console.log("password did not match")
       return res.status(400).json({
         success: false,
@@ -93,11 +104,15 @@ exports.login = async (req, res) => {
       });
     }
 
+      console.log("debug 7");
+
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
+
+      console.log("debug 8");
 
     console.log("returning the token")
 
