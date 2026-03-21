@@ -106,6 +106,10 @@ exports.login = async (req, res) => {
 
       console.log("debug 7");
 
+
+      console.log("jwt secret is ", process.env.JWT_SECRET);
+
+      
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
