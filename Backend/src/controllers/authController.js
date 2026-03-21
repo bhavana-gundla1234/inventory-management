@@ -75,6 +75,7 @@ exports.login = async (req, res) => {
     console.log("user is ", user);
 
     if (!user) {
+      console.log("user not found returning now")
       return res.status(400).json({
         success: false,
         message: "User not found"
@@ -84,6 +85,8 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
+
+      console.log("password did not match")
       return res.status(400).json({
         success: false,
         message: "Invalid email or password"
@@ -95,6 +98,8 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
+
+    console.log("returning the token")
 
     res.json({
       success: true,
