@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import styles from "./Products.module.css";
-import { apiRequest, BASE_UPLOAD_URL } from "../../services/api";
+import { apiRequest } from "../../services/api";
  
 // Import Assets
 import SalesIcon from "../../assets/Sales.png";
@@ -137,7 +137,7 @@ export default function Products() {
                   <div className={styles.cardStats}>
                     <div className={styles.statGroup}>
                       <span className={styles.statValue}>{summary.categoriesCount || 0}</span>
-                      <span className={styles.statLabel}>Last 7 days</span>
+                      {/* <span className={styles.statLabel}>Last 7 days</span> */}
                     </div>
                   </div>
                 </div>
@@ -146,8 +146,8 @@ export default function Products() {
                   <span className={styles.cardTitle}>Total Products</span>
                   <div className={styles.cardStats}>
                     <div className={styles.statGroup}>
-                      <span className={styles.statValue}>{summary.totalProducts || 0}</span>
-                      <span className={styles.statLabel}>Last 7 days</span>
+                      <span className={styles.statValue}>{summary.totalQuantity || 0}</span>
+                      {/* <span className={styles.statLabel}>Last 7 days</span> */}
                     </div>
                     <div className={styles.statGroup}>
                       <span className={styles.statValue}>{formatCurrency(summary.totalValue)}</span>
@@ -161,7 +161,7 @@ export default function Products() {
                   <div className={styles.cardStats}>
                     <div className={styles.statGroup}>
                       <span className={styles.statValue}>{topSelling.count || 0}</span>
-                      <span className={styles.statLabel}>Last 7 days</span>
+                      {/* <span className={styles.statLabel}>Last 7 days</span> */}
                     </div>
                     <div className={styles.statGroup}>
                       <span className={styles.statValue}>{formatCurrency(topSelling.totalValue)}</span>
@@ -207,7 +207,7 @@ export default function Products() {
                       <th className={styles.hideOnMobile}>Quantity</th>
                       <th className={styles.hideOnMobile}>Threshold Value</th>
                       <th className={styles.hideOnMobile}>Expiry Date</th>
-                      <th>Availability</th>
+                      <th className={styles.availabilityCol}>Availability</th>
                       <th className={styles.infoCol}></th>
                     </tr>
                   </thead>
@@ -218,27 +218,14 @@ export default function Products() {
                         style={{ cursor: 'pointer' }}
                         onClick={() => setSelectedProductForBuy(product)}
                       >
-                        <td className={styles.productNameCol}>
-                          <div className={styles.productImageWrapper}>
-                            {product.image ? (
-                              <img
-                                src={product.image.startsWith('http') ? product.image : `${BASE_UPLOAD_URL}/${product.image}`}
-                                alt={product.name}
-                                className={styles.productTableImage}
-                              />
-                            ) : (
-                              <div className={styles.tableImagePlaceholder}>
-                                {product.name.charAt(0).toUpperCase()}
-                              </div>
-                            )}
-                          </div>
+                        <td>
                           <span className={styles.productName}>{product.name}</span>
                         </td>
                         <td className={styles.hideOnMobile}>{formatCurrency(product.price)}</td>
                         <td className={styles.hideOnMobile}>{product.quantity} {product.unit}</td>
                         <td className={styles.hideOnMobile}>{product.threshold}</td>
                         <td className={styles.hideOnMobile}>{formatDate(product.expiryDate)}</td>
-                        <td className={`${styles.status} ${getStatusClass(product.status)}`}>
+                        <td className={`${styles.status} ${getStatusClass(product.status)} ${styles.availabilityCol}`}>
                           {getStatusText(product.status)}
                         </td>
                         <td className={styles.infoCol}>

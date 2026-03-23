@@ -5,7 +5,7 @@ import { apiRequest } from "../../services/api";
 import { ChevronDown } from "lucide-react";
 import SalesPurchaseGraph from "../../components/dashboard/SalesPurchaseGraph";
 import TopProducts from "../../components/dashboard/TopProducts";
-
+ 
 // Import Assets
 import SalesIcon from "../../assets/Sales.png";
 import RevenueIcon from "../../assets/Revenue.png";
@@ -19,18 +19,18 @@ import QuantityIcon from "../../assets/Quantity.png";
 import OnTheWayIcon from "../../assets/On the way.png";
 import SuppliersIcon from "../../assets/Suppliers.png";
 import CategoriesIcon from "../../assets/Categories.png";
-
+ 
 export default function Dashboard() {
   const [overview, setOverview] = useState({});
   const [graphData, setGraphData] = useState({ sales: [], purchases: [] });
   const [topProducts, setTopProducts] = useState([]);
   const [range, setRange] = useState("monthly");
   const [isLoading, setIsLoading] = useState(true);
-
+ 
   useEffect(() => {
     fetchData();
   }, [range]);
-
+ 
   const fetchData = async () => {
     setIsLoading(true);
     try {
@@ -39,30 +39,30 @@ export default function Dashboard() {
         apiRequest(`/dashboard/sales-purchase-graph?range=${range}`, "GET"),
         apiRequest("/dashboard/top-products", "GET")
       ]);
-
+ 
       if (ovRes.success) setOverview(ovRes.data);
-
+ 
       if (grRes.success) {
         setGraphData({ sales: grRes.sales, purchases: grRes.purchases });
       }
-
+ 
       if (tpRes.success) setTopProducts(tpRes.topProducts);
-
+ 
     } catch (err) {
       console.error("Dashboard fetch error:", err);
     } finally {
       setIsLoading(false);
     }
   };
-
+ 
   const formatCurrency = (val) => {
     return `₹${(val || 0).toLocaleString()}`;
   };
-
+ 
   return (
     <Layout>
       <div className={styles.dashboardContainer}>
-
+ 
         {/* Top Row: Overview Cards */}
         <div className={styles.topRow}>
           <div className={`${styles.leftColumn} ${styles.salesArea}`}>
@@ -92,7 +92,7 @@ export default function Dashboard() {
                     <img src={ProfitIcon} alt="Profit" />
                   </div>
                   <div className={styles.statLabel}>
-                    <span className={styles.statValue}>{formatCurrency(overview.totalSalesValue * 0.1)}</span>
+                    <span className={styles.statValue}>{formatCurrency(overview.profit)}</span>
                     <span className={styles.statName}>Profit</span>
                   </div>
                 </div>
@@ -101,14 +101,14 @@ export default function Dashboard() {
                     <img src={CostIcon} alt="Cost" />
                   </div>
                   <div className={styles.statLabel}>
-                    <span className={styles.statValue}>{formatCurrency(overview.totalSalesValue * 0.05)}</span>
+                    <span className={styles.statValue}>{formatCurrency(3889)}</span>
                     <span className={styles.statName}>Cost</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
+ 
           <div className={`${styles.rightColumn} ${styles.inventoryArea}`}>
             <div className={styles.summaryCard}>
               <h3>Inventory Summary</h3>
@@ -135,7 +135,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-
+ 
         {/* Second Row: Purchase & Product */}
         <div className={styles.topRow}>
           <div className={`${styles.leftColumn} ${styles.purchaseArea}`}>
@@ -181,7 +181,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-
+ 
           <div className={`${styles.rightColumn} ${styles.productArea}`}>
             <div className={styles.summaryCard}>
               <h3>Product Summary</h3>
@@ -208,7 +208,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-
+ 
         {/* Bottom Row: Graph and Top Products */}
         <div className={styles.bottomRow}>
           <div className={`${styles.leftColumn} ${styles.graphArea}`}>
@@ -223,8 +223,9 @@ export default function Dashboard() {
             <TopProducts products={topProducts} />
           </div>
         </div>
-
+ 
       </div>
     </Layout>
   );
 }
+ 

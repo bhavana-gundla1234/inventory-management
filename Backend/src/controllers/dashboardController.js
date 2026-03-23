@@ -9,7 +9,8 @@ exports.getDashboardOverview = async (req, res) => {
     const sales = await Transaction.find({ type: "sale" });
     const purchases = await Transaction.find({ type: "purchase" });
  
-    const totalSalesValue = sales.reduce((sum, t) => sum + t.amount, 0);
+    const totalSalesValue = sales.reduce((sum, t) => sum +( t.amount*1.1), 0);
+    const profit = sales.reduce((sum,t)=>sum+(t.amount*0.1),0);
     const totalPurchaseValue = purchases.reduce((sum, t) => sum + t.amount, 0);
  
     const salesCount = sales.length;
@@ -35,6 +36,7 @@ exports.getDashboardOverview = async (req, res) => {
       data: {
         totalSalesValue,
         salesCount,
+        profit,
         totalPurchaseValue,
         purchaseCount,
         totalItemsInStock,
@@ -190,4 +192,4 @@ exports.getStatisticsCards = async (req, res) => {
  
   }
 };
-  
+ 

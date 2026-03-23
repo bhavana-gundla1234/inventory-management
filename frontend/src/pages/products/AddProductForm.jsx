@@ -165,7 +165,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                         <input
                             type="number"
                             name="quantity"
-                            placeholder="Enter product quantity"
+                            placeholder="Enter product quantity (number of products)"
                             value={formData.quantity}
                             onChange={handleChange}
                             required
@@ -177,7 +177,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                         <input
                             type="text"
                             name="unit"
-                            placeholder="Enter product unit"
+                            placeholder="Enter product unit of measurement (kg/ltrs/pcs etc)"
                             value={formData.unit}
                             onChange={handleChange}
                             required

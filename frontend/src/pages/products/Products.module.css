@@ -140,29 +140,16 @@ td {
   border-bottom: 1px solid #f3f4f6;
 }
  
-.productNameCol {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.availabilityCol {
+  padding-left: 0px !important;
 }
  
-.productImageWrapper {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  overflow: hidden;
-  background-color: #f3f4f6;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.infoCol,
+.infoIcon {
+  display: none;
 }
  
-.productTableImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+/* These styles are no longer used as product images are removed from the table */
  
 .tableImagePlaceholder {
   width: 100%;
@@ -442,6 +429,7 @@ td {
   }
  
   .infoCol {
+    display: table-cell;
     width: 40px;
     padding: 12px 0;
     text-align: right;

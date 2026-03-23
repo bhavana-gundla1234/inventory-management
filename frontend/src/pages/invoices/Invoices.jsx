@@ -4,7 +4,7 @@ import styles from "./Invoices.module.css";
 import { apiRequest } from "../../services/api";
 import { MoreVertical, CheckCircle, Eye, Trash2 } from "lucide-react";
 import ViewInvoiceModal from "./ViewInvoiceModal";
-
+ 
 export default function Invoices() {
   const [summary, setSummary] = useState({});
   const [invoices, setInvoices] = useState([]);
@@ -14,7 +14,7 @@ export default function Invoices() {
   const [loading, setLoading] = useState(true);
   const [activeMenu, setActiveMenu] = useState(null);
   const menuRef = useRef(null);
-
+ 
   // Close menu on outside click
   useEffect(() => {
     function handleClickOutside(event) {
@@ -27,20 +27,20 @@ export default function Invoices() {
   }, [menuRef]);
   const [selectedInvoiceForView, setSelectedInvoiceForView] = useState(null);
   const [invoiceToDelete, setInvoiceToDelete] = useState(null);
-
+ 
   useEffect(() => {
     fetchSummary();
   }, []);
-
+ 
   useEffect(() => {
     fetchInvoices();
   }, [page]);
-
+ 
   const fetchSummary = async () => {
     const res = await apiRequest("/invoices/dashboard", "GET");
     if (res.success) setSummary(res.data);
   };
-
+ 
   const fetchInvoices = async () => {
     setLoading(true);
     const res = await apiRequest(`/invoices/?page=${page}&limit=10`, "GET");
@@ -50,7 +50,7 @@ export default function Invoices() {
     }
     setLoading(false);
   };
-
+ 
   const handleMarkPaid = async (id) => {
     const res = await apiRequest(`/invoices/paid/${id}`, "PUT");
     if (res.success) {
@@ -59,12 +59,12 @@ export default function Invoices() {
       fetchSummary();
     }
   };
-
+ 
   const handleDelete = (id) => {
     setInvoiceToDelete(id);
     setActiveMenu(null);
   };
-
+ 
   const confirmDelete = async () => {
     if (!invoiceToDelete) return;
     const res = await apiRequest(`/invoices/${invoiceToDelete}`, "DELETE");
@@ -74,11 +74,11 @@ export default function Invoices() {
       fetchSummary();
     }
   };
-
+ 
   const formatCurrency = (val) => {
     return `₹${(val || 0).toLocaleString()}`;
   };
-
+ 
   const formatDate = (dateStr) => {
     if (!dateStr) return "-";
     const date = new Date(dateStr);
@@ -88,17 +88,17 @@ export default function Invoices() {
       year: "2-digit"
     }).replace(/ /g, "-");
   };
-
+ 
   // Search works on both short Invoice ID and long Mongo ID
   const filteredInvoices = invoices.filter(inv =>
     inv.invoiceId.toLowerCase().includes(searchTerm.toLowerCase()) ||
     inv._id.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+ 
   return (
     <Layout onSearch={setSearchTerm} showSearch={true}>
       <div className={styles.invoicePage}>
-
+ 
         {/* Summary Area */}
         <div className={styles.summaryContainer}>
           <h2 className={styles.summaryTitle}>Overall Invoice</h2>
@@ -117,7 +117,7 @@ export default function Invoices() {
                 </div>
               </div>
             </div>
-
+ 
             {/* Total Invoices */}
             <div className={styles.card}>
               <div className={styles.cardContent}>
@@ -136,7 +136,7 @@ export default function Invoices() {
                 </div>
               </div>
             </div>
-
+ 
             {/* Paid Amount */}
             <div className={styles.card}>
               <div className={styles.cardContent}>
@@ -148,14 +148,14 @@ export default function Invoices() {
                       <span className={styles.statSubLabel}>Last 7 days</span>
                     </div>
                     <div className={styles.statItem}>
-                      <span className={styles.statValue}>{summary.paidCustomers || 0}</span>
+                      <span className={styles.statValue}>{summary.processedInvoices || 0}</span>
                       <span className={styles.statSubLabel}>customers</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
+ 
             {/* Unpaid Amount */}
             <div className={styles.card}>
               <div className={styles.cardContent}>
@@ -176,13 +176,13 @@ export default function Invoices() {
             </div>
           </div>
         </div>
-
+ 
         {/* Invoices List Area */}
         <div className={styles.tableContainer}>
           <div className={styles.tableHeader}>
             <h3>Invoices List</h3>
           </div>
-
+ 
           <table className={styles.invoiceTable}>
             <thead>
               <tr>
@@ -232,7 +232,7 @@ export default function Invoices() {
                         </button>
                       )}
                     </div>
-
+ 
                     <div ref={activeMenu === index ? menuRef : null}>
                       <button
                         className={styles.threeDots}
@@ -240,7 +240,7 @@ export default function Invoices() {
                       >
                         <MoreVertical size={20} />
                       </button>
-
+ 
                       {activeMenu === index && (
                         <div className={styles.menu}>
                           {inv.status === "unpaid" ? (
@@ -280,7 +280,7 @@ export default function Invoices() {
               ))}
             </tbody>
           </table>
-
+ 
           {/* Pagination */}
           <div className={styles.pagination}>
             <button
@@ -300,7 +300,7 @@ export default function Invoices() {
             </button>
           </div>
         </div>
-
+ 
         {/* Centered Delete Confirmation Modal (Mobile Image 3) */}
         {invoiceToDelete && (
           <div className={styles.modalOverlay} onClick={() => setInvoiceToDelete(null)}>
@@ -323,7 +323,7 @@ export default function Invoices() {
             </div>
           </div>
         )}
-
+ 
         {selectedInvoiceForView && (
           <ViewInvoiceModal
             invoice={selectedInvoiceForView}
@@ -334,3 +334,4 @@ export default function Invoices() {
     </Layout>
   );
 }
+ 
