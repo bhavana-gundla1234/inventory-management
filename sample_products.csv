@@ -1,6 +1,5 @@
 name,productId,category,price,quantity,unit,expiryDate,threshold
 product M,M707,Electric,50,20,pcs,2027-01-20,5
 Product N,N606,Grocery,50,200,kg,2027-01-20,10
-product M,O707,Electric,50,20,pcs,2027-01-20,5
-Product O,O606,Grocery,40,20,kg,2027-01-20,30
+product O,O707,Electric,50,20,pcs,2027-01-20,5
 product P,P707,Electric,30,10,pcs,2027-01-20,5
