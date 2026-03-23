@@ -19,7 +19,7 @@ export default function TopProducts({ products = [] }) {
                                     />
                                 ) : (
                                     <div className={styles.imagePlaceholder}>
-                                        {product._id.charAt(0).toUpperCase()}
+                                        image not available 
                                     </div>
                                 )}
                             </div>
