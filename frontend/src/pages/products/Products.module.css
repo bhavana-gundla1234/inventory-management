@@ -3,27 +3,27 @@
   flex-direction: column;
   gap: 24px;
 }
-
+ 
 .inventorySummary {
   background-color: white;
   padding: 16px 24px;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-
+ 
 .inventorySummary h2 {
   font-size: 16px;
   font-weight: 600;
   color: #1e1e2e;
   margin-bottom: 16px;
 }
-
+ 
 .summaryCards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
-
+ 
 .summaryCard {
   display: flex;
   flex-direction: column;
@@ -31,47 +31,47 @@
   padding-right: 16px;
   border-right: 1px solid #f3f4f6;
 }
-
+ 
 .summaryCard:last-child {
   border-right: none;
 }
-
+ 
 .cardTitle {
   font-size: 14px;
   font-weight: 600;
   color: #4b5563;
   margin-bottom: 4px;
 }
-
+ 
 .cardStats {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
+ 
 .statGroup {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-
+ 
 .statValue {
   font-size: 16px;
   font-weight: 700;
   color: #1e1e2e;
 }
-
+ 
 .statLabel {
   font-size: 12px;
   color: #6b7280;
 }
-
+ 
 .timeframe {
   font-size: 11px;
   color: #9ca3af;
   margin-top: 4px;
 }
-
+ 
 /* Products Table Section */
 .productsTableSection {
   background-color: white;
@@ -79,25 +79,25 @@
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .tableHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
 }
-
+ 
 .tableHeader h2 {
   font-size: 18px;
   font-weight: 600;
   color: #1e1e2e;
 }
-
+ 
 .headerActions {
   display: flex;
   gap: 16px;
 }
-
+ 
 .addProductBtn {
   background-color: #1e1e2e;
   color: white;
@@ -109,20 +109,20 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
+ 
 .addProductBtn:hover {
   background-color: #2c2c38;
 }
-
+ 
 .tableWrapper {
   overflow-x: auto;
 }
-
+ 
 table {
   width: 100%;
   border-collapse: collapse;
 }
-
+ 
 th {
   text-align: left;
   padding: 16px;
@@ -132,35 +132,71 @@ th {
   border-bottom: 1px solid #f3f4f6;
   background-color: #f9fafb;
 }
-
+ 
 td {
   padding: 16px;
   font-size: 14px;
   color: #1e1e2e;
   border-bottom: 1px solid #f3f4f6;
 }
-
+ 
+.productNameCol {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+ 
+.productImageWrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #f3f4f6;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.productTableImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+ 
+.tableImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 14px;
+}
+ 
 .productName {
   font-weight: 500;
 }
-
+ 
 .status {
   font-weight: 600;
   font-size: 13px;
 }
-
+ 
 .statusInStock {
   color: #10b981;
 }
-
+ 
 .statusLowStock {
   color: #f59e0b;
 }
-
+ 
 .statusOutOfStock {
   color: #ef4444;
 }
-
+ 
 /* Pagination */
 .pagination {
   display: flex;
@@ -168,7 +204,7 @@ td {
   align-items: center;
   margin-top: 24px;
 }
-
+ 
 .pageBtn {
   background-color: white;
   border: 1px solid #e5e7eb;
@@ -179,21 +215,21 @@ td {
   cursor: pointer;
   transition: background-color 0.2s;
 }
-
+ 
 .pageBtn:hover:not(:disabled) {
   background-color: #f9fafb;
 }
-
+ 
 .pageBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
+ 
 .pageInfo {
   font-size: 14px;
   color: #6b7280;
 }
-
+ 
 /* FAB */
 .fabContainer {
   position: fixed;
@@ -202,7 +238,7 @@ td {
   right: 24px;
   z-index: 900;
 }
-
+ 
 .fabButton {
   background-color: #1e1e2e;
   color: white;
@@ -215,12 +251,12 @@ td {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s, background-color 0.2s;
 }
-
+ 
 .fabButton:hover {
   background-color: #2c2c38;
   transform: translateY(-2px);
 }
-
+ 
 .addProductBtnDesktop {
   background-color: #1e1e2e;
   color: white;
@@ -232,11 +268,11 @@ td {
   cursor: pointer;
   display: block;
 }
-
+ 
 .addProductBtnDesktop:hover {
   background-color: #2c2c38;
 }
-
+ 
 /* Selection Modal (Image 1) */
 .selectionModalOverlay {
   position: fixed;
@@ -251,7 +287,7 @@ td {
   z-index: 2100;
   backdrop-filter: blur(4px);
 }
-
+ 
 .selectionModalContent {
   background-color: white;
   padding: 32px;
@@ -262,7 +298,7 @@ td {
   width: 300px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .selectionBtn {
   background-color: #1e1e2e;
   color: white;
@@ -275,11 +311,11 @@ td {
   transition: background-color 0.2s;
   text-align: center;
 }
-
+ 
 .selectionBtn:hover {
   background-color: #2c2c38;
 }
-
+ 
 @media (min-width: 769px) {
   .selectionModalContent {
     width: 600px;
@@ -287,31 +323,31 @@ td {
     gap: 32px;
     border-radius: 20px;
   }
-
+ 
   .selectionBtn {
     padding: 24px;
     font-size: 18px;
     border-radius: 12px;
   }
 }
-
+ 
 @media (max-width: 768px) {
   .fabContainer {
     display: flex;
     bottom: 80px;
   }
-
+ 
   .addProductBtnDesktop {
     display: none;
   }
 }
-
+ 
 @media (min-width: 769px) {
   .fabContainer {
     display: none;
   }
 }
-
+ 
 /* Modal Overlay (Generic) */
 .modalOverlay {
   position: fixed;
@@ -326,7 +362,7 @@ td {
   z-index: 1000;
   backdrop-filter: blur(4px);
 }
-
+ 
 .modalContent {
   background-color: white;
   padding: 60px;
@@ -337,7 +373,7 @@ td {
   width: 500px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .modalBtn {
   background-color: #1e1e2e;
   color: white;
@@ -349,70 +385,71 @@ td {
   cursor: pointer;
   transition: transform 0.2s, background-color 0.2s;
 }
-
+ 
 .modalBtn:hover {
   background-color: #2c2c38;
   transform: translateY(-2px);
 }
-
+ 
 @media (max-width: 768px) {
   .productsContainer {
     gap: 16px;
     padding: 0;
   }
-
+ 
   .inventorySummary {
     padding: 16px;
     border-radius: 12px;
   }
-
+ 
   .summaryCards {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
-
+ 
   .summaryCard {
     border-right: none;
     padding-right: 0;
   }
-
+ 
   .cardTitle {
     color: #1e1e2e !important;
     font-size: 16px;
     margin-bottom: 12px;
   }
-
+ 
   .statValue {
     font-size: 18px;
   }
-
+ 
   .productsTableSection {
     padding: 16px;
     border-radius: 12px;
   }
-
+ 
   .hideOnMobile {
     display: none;
   }
-
+ 
   th {
     padding: 12px;
     background-color: #c7d2fe;
     color: #1e1e2e;
   }
-
+ 
   td {
     padding: 12px;
   }
-
+ 
   .infoCol {
     width: 40px;
     padding: 12px 0;
     text-align: right;
   }
-
+ 
   .infoIcon {
     display: flex;
     justify-content: flex-end;
   }
 }
+ 

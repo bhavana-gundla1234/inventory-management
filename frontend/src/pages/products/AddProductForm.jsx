@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import styles from "./AddProductForm.module.css";
-
+ 
 export default function AddProductForm({ onSave, onCancel }) {
     const initialFormData = {
         name: "",
@@ -12,17 +12,17 @@ export default function AddProductForm({ onSave, onCancel }) {
         expiryDate: "",
         threshold: 5
     };
-
+ 
     const [formData, setFormData] = useState(initialFormData);
     const [image, setImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const fileInputRef = useRef(null);
-
+ 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
+ 
     const handleDiscard = () => {
         setFormData(initialFormData);
         setImage(null);
@@ -34,7 +34,7 @@ export default function AddProductForm({ onSave, onCancel }) {
             fileInputRef.current.value = "";
         }
     };
-
+ 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -42,12 +42,12 @@ export default function AddProductForm({ onSave, onCancel }) {
             setImagePreview(URL.createObjectURL(file));
         }
     };
-
+ 
     const handleDrag = (e) => {
         e.preventDefault();
         e.stopPropagation();
     };
-
+ 
     const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -57,21 +57,31 @@ export default function AddProductForm({ onSave, onCancel }) {
             setImagePreview(URL.createObjectURL(file));
         }
     };
-
+ 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave({ ...formData, image });
+ 
+        const formDataToSend = new FormData();
+        Object.keys(formData).forEach(key => {
+            formDataToSend.append(key, formData[key]);
+        });
+ 
+        if (image) {
+            formDataToSend.append("image", image);
+        }
+ 
+        onSave(formDataToSend);
     };
-
+ 
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.breadcrumb}>
                 <span className={styles.clickableLink} onClick={onCancel}>Add Product</span> &gt; <span className={styles.activeStep}>Individual Product</span>
             </div>
-
+ 
             <div className={styles.formContainer}>
                 <h2 className={styles.formHeader}>New Product</h2>
-
+ 
                 <div className={styles.imageUploadSection}>
                     <div
                         className={styles.imagePlaceholder}
@@ -100,7 +110,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                         or <span onClick={() => fileInputRef.current.click()} style={{ cursor: 'pointer', color: '#3b82f6' }}>Browse Image</span>
                     </div>
                 </div>
-
+ 
                 <form onSubmit={handleSubmit} className={styles.formGrid}>
                     <div className={styles.formGroup}>
                         <label>Product Name</label>
@@ -113,7 +123,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             required
                         />
                     </div>
-
+ 
                     <div className={styles.formGroup}>
                         <label>Product ID</label>
                         <input
@@ -125,7 +135,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             required
                         />
                     </div>
-
+ 
                     <div className={styles.formGroup}>
                         <label>Category</label>
                         <input
@@ -137,7 +147,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             required
                         />
                     </div>
-
+ 
                     <div className={styles.formGroup}>
                         <label>Price</label>
                         <input
@@ -149,7 +159,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             required
                         />
                     </div>
-
+ 
                     <div className={styles.formGroup}>
                         <label>Quantity</label>
                         <input
@@ -161,7 +171,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             required
                         />
                     </div>
-
+ 
                     <div className={styles.formGroup}>
                         <label>Unit</label>
                         <input
@@ -173,7 +183,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             required
                         />
                     </div>
-
+ 
                     <div className={styles.formGroup}>
                         <label>Expiry Date</label>
                         <input
@@ -184,7 +194,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             onChange={handleChange}
                         />
                     </div>
-
+ 
                     <div className={styles.formGroup}>
                         <label>Threshold Value</label>
                         <input
@@ -196,7 +206,7 @@ export default function AddProductForm({ onSave, onCancel }) {
                             required
                         />
                     </div>
-
+ 
                     <div className={styles.formActions}>
                         <button type="button" className={styles.discardBtn} onClick={handleDiscard}>
                             Discard
@@ -210,3 +220,5 @@ export default function AddProductForm({ onSave, onCancel }) {
         </div>
     );
 }
+ 
+ 

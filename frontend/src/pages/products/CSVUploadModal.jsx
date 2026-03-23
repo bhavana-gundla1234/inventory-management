@@ -1,36 +1,37 @@
 import React, { useState, useRef } from "react";
 import styles from "./CSVUploadModal.module.css";
 import uploadIcon from "../../assets/upload.png";
-
+import { apiRequest } from "../../services/api";
+ 
 export default function CSVUploadModal({ onClose, onUploadSuccess }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const fileInputRef = useRef(null);
-
+ 
     const handleDragEnter = (e) => {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(true);
     };
-
+ 
     const handleDragLeave = (e) => {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(false);
     };
-
+ 
     const handleDragOver = (e) => {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(true);
     };
-
+ 
     const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(false);
-
+ 
         const files = e.dataTransfer.files;
         if (files && files.length > 0) {
             const file = files[0];
@@ -41,14 +42,14 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
             }
         }
     };
-
+ 
     const handleFileSelect = (e) => {
         const file = e.target.files[0];
         if (file) {
             setSelectedFile(file);
         }
     };
-
+ 
     const formatFileSize = (bytes) => {
         if (bytes === 0) return "0 Bytes";
         const k = 1024;
@@ -56,28 +57,21 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
     };
-
+ 
     const handleUpload = async () => {
         if (!selectedFile) return;
-
+ 
         setIsUploading(true);
         const formData = new FormData();
         formData.append("file", selectedFile);
-
+ 
         try {
-            const response = await fetch("http://localhost:5000/api/products/upload-csv", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
-                },
-                body: formData
-            });
-
-            const data = await response.json();
-            if (data.success) {
+            const res = await apiRequest("/products/upload-csv", "POST", formData);
+ 
+            if (res.success) {
                 onUploadSuccess();
             } else {
-                alert(data.message || "CSV Upload failed");
+                alert(res.message || "CSV Upload failed");
             }
         } catch (error) {
             console.error("Upload error:", error);
@@ -86,19 +80,19 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
             setIsUploading(false);
         }
     };
-
+ 
     return (
         <div className={styles.modalOverlay} onClick={onClose}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                 <button className={styles.closeBtn} onClick={onClose}>
                     ✕
                 </button>
-
+ 
                 <div className={styles.header}>
                     <h2>CSV Upload</h2>
                     <p>Add your documents here</p>
                 </div>
-
+ 
                 <div
                     className={`${styles.dropArea} ${isDragging ? styles.dropAreaActive : ""} ${selectedFile ? styles.dropAreaWithFile : ""}`}
                     onDragEnter={handleDragEnter}
@@ -114,13 +108,13 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
                         </svg>
                     </div>
                     <p>Drag your file(s) to start uploading</p>
-
+ 
                     <div className={styles.orSeparator}>
                         <div className={styles.line}></div>
                         <span className={styles.orText}>OR</span>
                         <div className={styles.line}></div>
                     </div>
-
+ 
                     <button
                         className={styles.browseBtn}
                         type="button"
@@ -128,7 +122,7 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
                     >
                         Browse files
                     </button>
-
+ 
                     <input
                         type="file"
                         accept=".csv"
@@ -137,7 +131,7 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
                         onChange={handleFileSelect}
                     />
                 </div>
-
+ 
                 {selectedFile && (
                     <div className={styles.fileList}>
                         <div className={styles.fileItem}>
@@ -164,7 +158,7 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
                         </div>
                     </div>
                 )}
-
+ 
                 <div className={styles.actions}>
                     <button className={styles.cancelBtn} onClick={onClose} disabled={isUploading}>
                         Cancel
@@ -187,3 +181,5 @@ export default function CSVUploadModal({ onClose, onUploadSuccess }) {
         </div>
     );
 }
+ 
+ 

@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import styles from "./Products.module.css";
-import { apiRequest } from "../../services/api";
-
+import { apiRequest, BASE_UPLOAD_URL } from "../../services/api";
+ 
 // Import Assets
 import SalesIcon from "../../assets/Sales.png";
 import CategoriesIcon from "../../assets/Categories.png";
 import ProfitIcon from "../../assets/Profit (1).png";
 import CostIcon from "../../assets/Cost (1).png";
 import CancelIcon from "../../assets/Cancel.png";
-
+ 
 import AddProductForm from "./AddProductForm";
 import CSVUploadModal from "./CSVUploadModal";
 import BuyProductModal from "./BuyProductModal";
-
+ 
 export default function Products() {
   const [summary, setSummary] = useState({});
   const [topSelling, setTopSelling] = useState({});
@@ -25,26 +25,26 @@ export default function Products() {
   const [view, setView] = useState("table"); // table, add-single, add-multiple
   const [selectedProductForBuy, setSelectedProductForBuy] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+ 
   useEffect(() => {
     fetchSummary();
     fetchTopSelling();
   }, []);
-
+ 
   useEffect(() => {
     fetchProducts();
   }, [page]);
-
+ 
   const fetchSummary = async () => {
     const res = await apiRequest("/products/inventory-summary", "GET");
     if (res.success) setSummary(res.data);
   };
-
+ 
   const fetchTopSelling = async () => {
     const res = await apiRequest("/products/top-selling", "GET");
     if (res.success) setTopSelling(res);
   };
-
+ 
   const fetchProducts = async () => {
     setIsLoading(true);
     const res = await apiRequest(`/products/?page=${page}&limit=10`, "GET");
@@ -54,7 +54,7 @@ export default function Products() {
     }
     setIsLoading(false);
   };
-
+ 
   const handleSaveProduct = async (formData) => {
     const res = await apiRequest("/products/add", "POST", formData);
     if (res.success) {
@@ -65,42 +65,34 @@ export default function Products() {
       alert("Failed to add product");
     }
   };
-
+ 
   const handleCSVUpload = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-
-    // Using native fetch for FormData because apiRequest might not handle it
+ 
     try {
-      const response = await fetch("http://localhost:3000/api/products/upload-csv", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-        body: formData
-      });
-      const data = await response.json();
-      if (data.success) {
+      const res = await apiRequest("/products/upload-csv", "POST", formData);
+      if (res.success) {
         setView("table");
         fetchProducts();
         fetchSummary();
       } else {
-        alert("CSV Upload failed");
+        alert(res.message || "CSV Upload failed");
       }
     } catch (error) {
       console.error("Upload error:", error);
     }
   };
-
+ 
   const formatCurrency = (val) => {
     return `₹${(val || 0).toLocaleString()}`;
   };
-
+ 
   const filteredProducts = products.filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.productId.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+ 
   const getStatusClass = (status) => {
     switch (status) {
       case "in-stock": return styles.statusInStock;
@@ -109,7 +101,7 @@ export default function Products() {
       default: return "";
     }
   };
-
+ 
   const getStatusText = (status) => {
     switch (status) {
       case "in-stock": return "In- stock";
@@ -118,17 +110,17 @@ export default function Products() {
       default: return status;
     }
   };
-
+ 
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
     const d = new Date(dateStr);
     return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear().toString().slice(-2)}`;
   };
-
+ 
   return (
     <Layout showSearch={view === "table"} onSearch={setSearchTerm}>
       <div className={styles.productsContainer}>
-
+ 
         {view === "add-single" ? (
           <AddProductForm
             onSave={handleSaveProduct}
@@ -149,7 +141,7 @@ export default function Products() {
                     </div>
                   </div>
                 </div>
-
+ 
                 <div className={styles.summaryCard}>
                   <span className={styles.cardTitle}>Total Products</span>
                   <div className={styles.cardStats}>
@@ -163,7 +155,7 @@ export default function Products() {
                     </div>
                   </div>
                 </div>
-
+ 
                 <div className={styles.summaryCard}>
                   <span className={styles.cardTitle}>Top Selling</span>
                   <div className={styles.cardStats}>
@@ -177,7 +169,7 @@ export default function Products() {
                     </div>
                   </div>
                 </div>
-
+ 
                 <div className={styles.summaryCard}>
                   <span className={styles.cardTitle}>Low Stocks</span>
                   <div className={styles.cardStats}>
@@ -193,7 +185,7 @@ export default function Products() {
                 </div>
               </div>
             </div>
-
+ 
             {/* Products Table */}
             <div className={styles.productsTableSection}>
               <div className={styles.tableHeader}>
@@ -205,7 +197,7 @@ export default function Products() {
                   Add Product
                 </button>
               </div>
-
+ 
               <div className={styles.tableWrapper}>
                 <table>
                   <thead>
@@ -226,7 +218,22 @@ export default function Products() {
                         style={{ cursor: 'pointer' }}
                         onClick={() => setSelectedProductForBuy(product)}
                       >
-                        <td className={styles.productName}>{product.name}</td>
+                        <td className={styles.productNameCol}>
+                          <div className={styles.productImageWrapper}>
+                            {product.image ? (
+                              <img
+                                src={product.image.startsWith('http') ? product.image : `${BASE_UPLOAD_URL}/${product.image}`}
+                                alt={product.name}
+                                className={styles.productTableImage}
+                              />
+                            ) : (
+                              <div className={styles.tableImagePlaceholder}>
+                                {product.name.charAt(0).toUpperCase()}
+                              </div>
+                            )}
+                          </div>
+                          <span className={styles.productName}>{product.name}</span>
+                        </td>
                         <td className={styles.hideOnMobile}>{formatCurrency(product.price)}</td>
                         <td className={styles.hideOnMobile}>{product.quantity} {product.unit}</td>
                         <td className={styles.hideOnMobile}>{product.threshold}</td>
@@ -248,7 +255,7 @@ export default function Products() {
                   </tbody>
                 </table>
               </div>
-
+ 
               <div className={styles.pagination}>
                 <button
                   className={styles.pageBtn}
@@ -267,7 +274,7 @@ export default function Products() {
                 </button>
               </div>
             </div>
-
+ 
             {/* Floating Action Button */}
             <div className={styles.fabContainer}>
               <button
@@ -278,7 +285,7 @@ export default function Products() {
                 Add Product
               </button>
             </div>
-
+ 
             {view === "add-multiple" && (
               <CSVUploadModal
                 onClose={() => setView("table")}
@@ -289,7 +296,7 @@ export default function Products() {
                 }}
               />
             )}
-
+ 
             {selectedProductForBuy && (
               <BuyProductModal
                 product={selectedProductForBuy}
@@ -303,7 +310,7 @@ export default function Products() {
             )}
           </>
         )}
-
+ 
         {/* Add Product Selection Modal (Redesigned) */}
         {showAddModal && (
           <div className={styles.selectionModalOverlay} onClick={() => setShowAddModal(false)}>
@@ -323,8 +330,9 @@ export default function Products() {
             </div>
           </div>
         )}
-
+ 
       </div>
     </Layout>
   );
 }
+ 
